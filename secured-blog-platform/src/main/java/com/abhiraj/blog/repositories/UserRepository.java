@@ -1,6 +1,6 @@
-package com.abhiraj.blog.repository;
+package com.abhiraj.blog.repositories;
 
-import com.abhiraj.blog.domain.entity.User;
+import com.abhiraj.blog.domain.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

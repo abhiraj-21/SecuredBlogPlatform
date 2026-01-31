@@ -1,4 +1,4 @@
-package com.abhiraj.blog.domain.entity;
+package com.abhiraj.blog.domain.entities;
 
 import com.abhiraj.blog.domain.Role;
 import jakarta.persistence.*;

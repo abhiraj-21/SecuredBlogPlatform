@@ -1,4 +1,4 @@
-package com.abhiraj.blog.domain.entity;
+package com.abhiraj.blog.domain.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;

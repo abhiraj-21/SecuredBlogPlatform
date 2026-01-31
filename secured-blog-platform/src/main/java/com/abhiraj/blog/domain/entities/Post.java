@@ -41,6 +41,7 @@ public class Post {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
+    @Builder.Default
     private List<Comment> comments = new ArrayList<>();
 
     @PrePersist

@@ -18,6 +18,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 public class User {
 
     @Id
@@ -42,18 +43,21 @@ public class User {
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
+    @Builder.Default                        //If we don't use this then @Builder would skip the initialization of this collection giving NullPointerException
     private Set<Role> roles = new HashSet<>();
 
     @OneToMany(mappedBy = "author",
             cascade = CascadeType.ALL,  //If user is deleted all posts from him would be deleted as well
             orphanRemoval = true        //If user removes post from his profile it would be deleted from the database as well
     )
+    @Builder.Default
     private List<Post> posts = new ArrayList<>();
 
     @OneToMany(mappedBy = "commenter",
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
+    @Builder.Default
     private List<Comment> comments = new ArrayList<>();
 
     @Column(updatable = false)

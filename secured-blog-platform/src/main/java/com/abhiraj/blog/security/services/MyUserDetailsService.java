@@ -1,6 +1,7 @@
 package com.abhiraj.blog.security.services;
 
 import com.abhiraj.blog.domain.entities.User;
+import com.abhiraj.blog.exceptions.UserNotFoundException;
 import com.abhiraj.blog.repositories.UserRepository;
 import com.abhiraj.blog.security.domain.UserPrincipal;
 import lombok.RequiredArgsConstructor;
@@ -17,10 +18,9 @@ public class MyUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(email);
-        if(user == null){
-            throw new UsernameNotFoundException("No user with email id: "+email);
-        }
+        User user = userRepository.findByEmail(email).orElseThrow(()->
+                    new UserNotFoundException("No user with email: "+email)
+                );
 
         return new UserPrincipal(user);
     }

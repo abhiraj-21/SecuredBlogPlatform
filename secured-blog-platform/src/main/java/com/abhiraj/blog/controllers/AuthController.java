@@ -1,6 +1,8 @@
 package com.abhiraj.blog.controllers;
 
+import com.abhiraj.blog.domain.dtos.requests.LoginRequestDto;
 import com.abhiraj.blog.domain.dtos.requests.UserRequestDto;
+import com.abhiraj.blog.domain.dtos.responses.JwtResponseDto;
 import com.abhiraj.blog.domain.dtos.responses.UserResponseDto;
 import com.abhiraj.blog.services.AuthService;
 import jakarta.validation.Valid;
@@ -21,6 +23,11 @@ public class AuthController {
     @PostMapping(path="/register")
     public ResponseEntity<UserResponseDto> registerNewUser(@Valid @RequestBody UserRequestDto userRequestDto){
         return ResponseEntity.ok(authService.addNewUser(userRequestDto));
+    }
+
+    @PostMapping(path = "/login")
+    public ResponseEntity<JwtResponseDto> login(@RequestBody LoginRequestDto loginRequestDto){
+        return ResponseEntity.ok(authService.verify(loginRequestDto));
     }
 
 }

@@ -1,6 +1,5 @@
 package com.abhiraj.blog.security.domain;
 
-import com.abhiraj.blog.domain.Role;
 import com.abhiraj.blog.domain.entities.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,8 +10,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor

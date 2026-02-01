@@ -1,5 +1,6 @@
 package com.abhiraj.blog.mappings;
 
+import com.abhiraj.blog.domain.dtos.requests.LoginRequestDto;
 import com.abhiraj.blog.domain.dtos.requests.UserRequestDto;
 import com.abhiraj.blog.domain.dtos.responses.UserResponseDto;
 import com.abhiraj.blog.domain.entities.User;
@@ -27,4 +28,10 @@ public class UserMapping {
                 .build();
     }
 
+    public User loginRequestToUser(LoginRequestDto loginRequestDto){
+        return User.builder()
+                .password(loginRequestDto.getPassword())
+                .email(loginRequestDto.getEmail())
+                .build();
+    }
 }

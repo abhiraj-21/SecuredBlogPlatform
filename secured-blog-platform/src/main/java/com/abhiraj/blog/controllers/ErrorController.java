@@ -1,6 +1,7 @@
 package com.abhiraj.blog.controllers;
 
 import com.abhiraj.blog.domain.dtos.ApiErrorResponse;
+import com.abhiraj.blog.exceptions.PostNotFoundException;
 import com.abhiraj.blog.exceptions.UserNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -57,6 +58,16 @@ public class ErrorController {
                 .message(ex.getMessage())
                 .build();
         return new ResponseEntity<>(error, HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(PostNotFoundException.class)
+    public ResponseEntity<ApiErrorResponse> handlePostNotFoundException(PostNotFoundException ex){
+        log.error("Caught Exception: ", ex);
+        ApiErrorResponse error = ApiErrorResponse.builder()
+                .status(HttpStatus.NOT_FOUND.value())
+                .message(ex.getMessage())
+                .build();
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
 }

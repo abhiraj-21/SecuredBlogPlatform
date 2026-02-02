@@ -2,7 +2,6 @@ package com.abhiraj.blog.controllers;
 
 import com.abhiraj.blog.domain.dtos.requests.PostRequestDto;
 import com.abhiraj.blog.domain.dtos.responses.PostResponseDto;
-import com.abhiraj.blog.domain.entities.Post;
 import com.abhiraj.blog.services.PostService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +18,11 @@ public class PostController {
     @PostMapping
     public ResponseEntity<PostResponseDto> createNewPost(@Valid @RequestBody PostRequestDto postRequestDto){
         return ResponseEntity.ok(postService.addNewPost(postRequestDto));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<PostResponseDto> getPostByPostId(@PathVariable Long id){
+        return ResponseEntity.ok(postService.getPostById(id));
     }
 
 }

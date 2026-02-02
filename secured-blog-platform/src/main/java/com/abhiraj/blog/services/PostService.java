@@ -6,4 +6,5 @@ import com.abhiraj.blog.domain.dtos.responses.PostResponseDto;
 
 public interface PostService {
     PostResponseDto addNewPost(PostRequestDto postRequestDto);
+    PostResponseDto getPostById(Long id);
 }

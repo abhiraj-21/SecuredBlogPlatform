@@ -9,13 +9,12 @@ import com.abhiraj.blog.exceptions.ForbiddenOperationException;
 import com.abhiraj.blog.exceptions.PostNotFoundException;
 import com.abhiraj.blog.mappings.PostMapping;
 import com.abhiraj.blog.repositories.CommentRepository;
-import com.abhiraj.blog.repositories.PostCommentCount;
+import com.abhiraj.blog.repositories.projections.PostCommentCount;
 import com.abhiraj.blog.repositories.PostRepository;
 import com.abhiraj.blog.repositories.UserRepository;
 import com.abhiraj.blog.services.CurrentUserService;
 import com.abhiraj.blog.services.PostService;
 import lombok.RequiredArgsConstructor;
-import org.jspecify.annotations.Nullable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 

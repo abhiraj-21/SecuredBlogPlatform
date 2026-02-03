@@ -20,6 +20,7 @@ public class PostMapping {
 
     public PostResponseDto postToResponse(Post post, Long commentCount){
         return PostResponseDto.builder()
+                .postId(post.getId())
                 .authorUsername(post.getAuthor().getUsername())
                 .commentCount(commentCount)
                 .content(post.getContent())

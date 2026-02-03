@@ -5,7 +5,6 @@ import com.abhiraj.blog.domain.dtos.requests.PostCreateRequestDto;
 import com.abhiraj.blog.domain.dtos.requests.PostUpdateRequestDto;
 import com.abhiraj.blog.domain.dtos.responses.PostResponseDto;
 import jakarta.transaction.Transactional;
-import org.jspecify.annotations.Nullable;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;

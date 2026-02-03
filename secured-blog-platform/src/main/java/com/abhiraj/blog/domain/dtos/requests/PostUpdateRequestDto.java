@@ -1,6 +1,6 @@
 package com.abhiraj.blog.domain.dtos.requests;
 
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,11 +10,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Builder
-public class PostRequestDto {
-
-    @NotBlank(message = "Title cannot be empty")
+public class PostUpdateRequestDto {
+    @Size(min=1, max=255)
     private String title;
-
-    @NotBlank(message = "Body cannot be empty")
+    @Size(min=1)
     private String content;
 }

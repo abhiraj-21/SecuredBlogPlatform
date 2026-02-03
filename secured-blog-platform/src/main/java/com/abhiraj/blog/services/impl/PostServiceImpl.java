@@ -1,9 +1,11 @@
 package com.abhiraj.blog.services.impl;
 
-import com.abhiraj.blog.domain.dtos.requests.PostRequestDto;
+import com.abhiraj.blog.domain.dtos.requests.PostCreateRequestDto;
+import com.abhiraj.blog.domain.dtos.requests.PostUpdateRequestDto;
 import com.abhiraj.blog.domain.dtos.responses.PostResponseDto;
 import com.abhiraj.blog.domain.entities.Post;
 import com.abhiraj.blog.domain.entities.User;
+import com.abhiraj.blog.exceptions.ForbiddenOperationException;
 import com.abhiraj.blog.exceptions.PostNotFoundException;
 import com.abhiraj.blog.mappings.PostMapping;
 import com.abhiraj.blog.repositories.CommentRepository;
@@ -13,6 +15,7 @@ import com.abhiraj.blog.repositories.UserRepository;
 import com.abhiraj.blog.services.CurrentUserService;
 import com.abhiraj.blog.services.PostService;
 import lombok.RequiredArgsConstructor;
+import org.jspecify.annotations.Nullable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -32,11 +35,11 @@ public class PostServiceImpl implements PostService {
     private final CurrentUserService currentUserService;
 
     @Override
-    public PostResponseDto addNewPost(PostRequestDto postRequestDto) {
+    public PostResponseDto addNewPost(PostCreateRequestDto postCreateRequestDto) {
 
         User user = currentUserService.getAuthenticatedUser();
 
-        Post post = postMapping.requestToPost(postRequestDto);
+        Post post = postMapping.createRequestToPost(postCreateRequestDto);
         post.setAuthor(user);
         Post savedPost = postRepository.save(post);
         Long commentCount = commentRepository.countByPostId(savedPost.getId());
@@ -82,5 +85,33 @@ public class PostServiceImpl implements PostService {
                         commentCountMap.getOrDefault(post.getId(), 0L))
                 )
                 .toList();
+    }
+
+    @Override
+    public PostResponseDto updatePost(Long id, PostUpdateRequestDto postUpdateRequestDto) {
+        Post post = postRepository.findById(id).orElseThrow(() ->
+                new PostNotFoundException("No post with post id "+ id)
+        );
+
+        User currentUser = currentUserService.getAuthenticatedUser();
+        if(!post.getAuthor().getId().equals(currentUser.getId())){
+            throw new ForbiddenOperationException("You cannot edit someone else's post!!");
+        }
+
+        postMapping.applyUpdates(post, postUpdateRequestDto);
+        postRepository.save(post);
+        return postMapping.postToResponse(post, commentRepository.countByPostId(id));
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        Post post = postRepository.findById(id).orElseThrow(() ->
+                    new PostNotFoundException("No post with post id "+id)
+                );
+        User currentUser = currentUserService.getAuthenticatedUser();
+        if(!post.getAuthor().getId().equals(currentUser.getId())){
+            throw new ForbiddenOperationException("You cannot delete someone else's post!!");
+        }
+        postRepository.delete(post);
     }
 }

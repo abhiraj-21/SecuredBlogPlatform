@@ -1,11 +1,9 @@
 package com.abhiraj.blog.mappings;
 
-import com.abhiraj.blog.domain.dtos.requests.PostRequestDto;
+import com.abhiraj.blog.domain.dtos.requests.PostCreateRequestDto;
+import com.abhiraj.blog.domain.dtos.requests.PostUpdateRequestDto;
 import com.abhiraj.blog.domain.dtos.responses.PostResponseDto;
 import com.abhiraj.blog.domain.entities.Post;
-import com.abhiraj.blog.domain.entities.User;
-import com.abhiraj.blog.exceptions.UserNotFoundException;
-import com.abhiraj.blog.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -13,10 +11,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class PostMapping {
 
-    public Post requestToPost(PostRequestDto postRequestDto){
+    public Post createRequestToPost(PostCreateRequestDto postCreateRequestDto){
         return Post.builder()
-                .title(postRequestDto.getTitle())
-                .content(postRequestDto.getContent())
+                .title(postCreateRequestDto.getTitle())
+                .content(postCreateRequestDto.getContent())
                 .build();
     }
 
@@ -29,6 +27,17 @@ public class PostMapping {
                 .createdAt(post.getCreatedAt())
                 .updatedAt(post.getUpdatedAt())
                 .build();
+    }
+
+    public void applyUpdates(Post post, PostUpdateRequestDto postUpdateRequestDto){
+        String title = postUpdateRequestDto.getTitle();
+        String content = postUpdateRequestDto.getContent();
+        if(title != null){
+            post.setTitle(title);
+        }
+        if(content != null){
+            post.setContent(content);
+        }
     }
 
 }

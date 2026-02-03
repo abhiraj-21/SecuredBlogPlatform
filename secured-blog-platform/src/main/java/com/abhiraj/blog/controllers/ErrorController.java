@@ -1,6 +1,7 @@
 package com.abhiraj.blog.controllers;
 
 import com.abhiraj.blog.domain.dtos.ApiErrorResponse;
+import com.abhiraj.blog.exceptions.ForbiddenOperationException;
 import com.abhiraj.blog.exceptions.PostNotFoundException;
 import com.abhiraj.blog.exceptions.UserNotFoundException;
 import lombok.extern.slf4j.Slf4j;
@@ -68,6 +69,15 @@ public class ErrorController {
                 .message(ex.getMessage())
                 .build();
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(ForbiddenOperationException.class)
+    public ResponseEntity<ApiErrorResponse> handleForbiddenOperationException(ForbiddenOperationException ex){
+        ApiErrorResponse error = ApiErrorResponse.builder()
+                .status(HttpStatus.FORBIDDEN.value())
+                .message(ex.getMessage())
+                .build();
+        return new ResponseEntity<>(error, HttpStatus.FORBIDDEN);
     }
 
 }

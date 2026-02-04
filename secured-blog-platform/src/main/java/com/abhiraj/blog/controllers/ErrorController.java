@@ -1,6 +1,7 @@
 package com.abhiraj.blog.controllers;
 
 import com.abhiraj.blog.domain.dtos.ApiErrorResponse;
+import com.abhiraj.blog.exceptions.CommentNotFoundException;
 import com.abhiraj.blog.exceptions.ForbiddenOperationException;
 import com.abhiraj.blog.exceptions.PostNotFoundException;
 import com.abhiraj.blog.exceptions.UserNotFoundException;
@@ -78,6 +79,15 @@ public class ErrorController {
                 .message(ex.getMessage())
                 .build();
         return new ResponseEntity<>(error, HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler(CommentNotFoundException.class)
+    public ResponseEntity<ApiErrorResponse> handleCommentNotFoundException(CommentNotFoundException ex){
+        ApiErrorResponse error = ApiErrorResponse.builder()
+                .message(ex.getMessage())
+                .status(HttpStatus.NOT_FOUND.value())
+                .build();
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
 }

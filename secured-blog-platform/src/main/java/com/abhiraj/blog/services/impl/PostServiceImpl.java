@@ -1,5 +1,6 @@
 package com.abhiraj.blog.services.impl;
 
+import com.abhiraj.blog.domain.Role;
 import com.abhiraj.blog.domain.dtos.requests.PostCreateRequestDto;
 import com.abhiraj.blog.domain.dtos.requests.PostUpdateRequestDto;
 import com.abhiraj.blog.domain.dtos.responses.PostResponseDto;
@@ -108,7 +109,7 @@ public class PostServiceImpl implements PostService {
                     new PostNotFoundException("No post with post id "+id)
                 );
         User currentUser = currentUserService.getAuthenticatedUser();
-        if(!post.getAuthor().getId().equals(currentUser.getId())){
+        if(!post.getAuthor().getId().equals(currentUser.getId()) && !currentUser.getRoles().contains(Role.ADMIN)){
             throw new ForbiddenOperationException("You cannot delete someone else's post!!");
         }
         postRepository.delete(post);

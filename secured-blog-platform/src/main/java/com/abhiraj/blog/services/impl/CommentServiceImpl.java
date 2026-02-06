@@ -1,5 +1,6 @@
 package com.abhiraj.blog.services.impl;
 
+import com.abhiraj.blog.domain.Role;
 import com.abhiraj.blog.domain.dtos.requests.CommentRequestDto;
 import com.abhiraj.blog.domain.dtos.responses.CommentResponseDto;
 import com.abhiraj.blog.domain.entities.Comment;
@@ -59,7 +60,7 @@ public class CommentServiceImpl implements CommentService {
         boolean isCommentOwner = comment.getCommenter().getId().equals(currentUser.getId());
         boolean isPostOwner = comment.getPost().getAuthor().getId().equals(currentUser.getId());
 
-        if (!isCommentOwner && !isPostOwner) {
+        if (!isCommentOwner && !isPostOwner && !currentUser.getRoles().contains(Role.ADMIN)) {
             throw new ForbiddenOperationException("You are not authorized to delete this comment");
         }
 

@@ -43,6 +43,10 @@ Unlike simple tutorials, this project addresses critical architectural challenge
 
 ---
 
+<div align="center"> 
+  <img src="assets/entity-diagram.png" alt="Entity Diagram" width="800"/>
+</div>
+
 ## 🛠 Tech Stack
 
 | Component | Technology |
@@ -125,6 +129,10 @@ Follow these steps to set up the project locally.
 
 Detailed API documentation is available via **Swagger UI** once the application is running:
 > **URL:** [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
+
+<div align="center"> 
+  <img src="assets/swagger-ui.png" alt="Swagger UI Screenshot" width="800"/>
+</div>
 
 ### Quick Reference
 
